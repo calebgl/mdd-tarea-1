@@ -1,5 +1,7 @@
 from zipfile import ZipFile
-import kaggle, os, json
+from dotenv import load_dotenv
+from json import dump
+import kaggle, os
 
 
 def init_on_kaggle(home_directory: str, username: str, api_key: str) -> None:
@@ -7,14 +9,15 @@ def init_on_kaggle(home_directory: str, username: str, api_key: str) -> None:
     os.makedirs(KAGGLE_CONFIG_DIR, exist_ok=True)
     api_dict = {"username": username, "key": api_key}
     with open(f"{KAGGLE_CONFIG_DIR}\kaggle.json", "w", encoding="utf-8") as f:
-        json.dump(api_dict, f)
+        dump(api_dict, f)
 
 
 def main():
-    # linux users home_directory "~"
-    # windows users home_directory "C:\Users\user"
+    load_dotenv()
     init_on_kaggle(
-        R"C:\Users\caleb", "calebguerrero", "b0f412283e369f5432b6d3fa6f1e30b3"
+        os.environ.get("HOME_DIRECTORY"),
+        os.environ.get("USERNAME"),
+        os.environ.get("API_KEY"),
     )
 
     api = kaggle.api
