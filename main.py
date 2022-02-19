@@ -1,7 +1,7 @@
 from zipfile import ZipFile
 from dotenv import load_dotenv
 from json import dump
-import kaggle, os
+import os
 
 
 def init_on_kaggle(home_directory: str, username: str, api_key: str) -> None:
@@ -16,9 +16,11 @@ def main():
     load_dotenv()
     init_on_kaggle(
         os.environ.get("HOME_DIRECTORY"),
-        os.environ.get("USERNAME"),
+        os.environ.get("KAGGLE_USER"),
         os.environ.get("API_KEY"),
     )
+
+    import kaggle
 
     api = kaggle.api
     dataset_name = "rsrishav/youtube-trending-video-dataset"
