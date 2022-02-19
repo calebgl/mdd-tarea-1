@@ -1,4 +1,4 @@
-# Minería de datos - Tarea 1
+# Práctica 1
 
 Para ejecutar el proyecto hay que instalar las librerías listadas en el archivo de texto con el siguiente comando:
 
