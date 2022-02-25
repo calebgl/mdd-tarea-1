@@ -12,7 +12,7 @@ def init_on_kaggle(home_directory: str, username: str, api_key: str) -> None:
         dump(api_dict, f)
 
 
-def main():
+def main() -> None:
     load_dotenv()
     init_on_kaggle(
         os.environ.get("HOME_DIRECTORY"),
