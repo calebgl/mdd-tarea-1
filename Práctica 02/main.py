@@ -18,7 +18,6 @@ def read_categories(file_name: str) -> dict[int, str]:
 
 def insert_categories(data_frame: list[pd.DataFrame], categories: object) -> None:
     data_frame["category"] = data_frame["categoryId"].map(categories)
-    data_frame.drop(["categoryId"], axis=1)
 
 
 def normalize_date(data_frame: list[pd.DataFrame], columns: list[str]) -> None:
@@ -33,6 +32,8 @@ def main() -> None:
 
     insert_categories(data_frame, categories)
     normalize_date(data_frame, date_columns)
+
+    data_frame = data_frame.drop(["categoryId"], axis=1)
 
     print(data_frame)
 
