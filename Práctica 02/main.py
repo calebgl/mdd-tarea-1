@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 
-def read_raw_data(file_name: str) -> list[pd.DataFrame]:
+def read_raw_data(file_name: str) -> pd.DataFrame:
     raw_data_frame = pd.read_csv(file_name)
     return raw_data_frame
 
@@ -16,11 +16,11 @@ def read_categories(file_name: str) -> dict[int, str]:
         }
 
 
-def insert_categories(data_frame: list[pd.DataFrame], categories: object) -> None:
-    data_frame["category"] = data_frame["categoryId"].map(categories)
+def insert_categories(data_frame: pd.DataFrame, categories: dict[int, str]) -> pd.Series:
+    return data_frame["categoryId"].map(categories)
 
 
-def normalize_date(data_frame: list[pd.DataFrame], columns: list[str]) -> None:
+def normalize_date(data_frame: pd.DataFrame, columns: list[str]) -> None:
     for column in columns:
         data_frame[column] = pd.to_datetime(data_frame[column])
 
@@ -30,9 +30,9 @@ def main() -> None:
     categories = read_categories("MX_category_id.json")
     date_columns = ["publishedAt", "trending_date"]
 
-    insert_categories(data_frame, categories)
     normalize_date(data_frame, date_columns)
 
+    data_frame = insert_categories(data_frame, categories)
     data_frame = data_frame.drop(["categoryId"], axis=1)
 
     print(data_frame)
