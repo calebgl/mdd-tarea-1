@@ -11,22 +11,19 @@ def read_categories(file_name: str) -> dict[int, str]:
         }
 
 
-def insert_categories(data_frame: pd.DataFrame, categories: dict[int, str]) -> pd.Series:
-    return data_frame["categoryId"].map(categories)
-
-
 def main() -> None:
+    categories = read_categories("MX_category_id.json")
+    insert_category = lambda id: categories[int(id)] if int(id) in categories else "Other"
+
     data_frame = pd.read_csv(
         "MX_youtube_trending_data.csv",
         index_col="video_id",
         parse_dates=["publishedAt", "trending_date"],
         date_parser=lambda date: pd.to_datetime(date),
+        converters={"categoryId": insert_category}
     )
 
-    categories = read_categories("MX_category_id.json")
-
-    data_frame["category"] = insert_categories(data_frame, categories)
-    data_frame.drop("categoryId", axis=1, inplace=True)
+    data_frame.rename(columns={"categoryId": "category"}, inplace=True)
 
     print(data_frame)
 
