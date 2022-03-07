@@ -23,7 +23,7 @@ def main() -> None:
         converters={"categoryId": insert_category}
     )
 
-    data_frame.rename(columns={"categoryId": "category"}, inplace=True)
+    data_frame.rename(columns={"categoryId": "category"}, axis=1, inplace=True)
 
     print(data_frame)
 
