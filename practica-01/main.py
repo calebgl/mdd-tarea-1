@@ -1,5 +1,5 @@
-from kaggle.api.kaggle_api_extended import KaggleApi
-from zipfile import ZipFile
+from kaggle.api import kaggle_api_extended as kaggle
+import zipfile
 import os
 
 
@@ -9,13 +9,13 @@ def main():
     FILE_NAME_CSV = "MX_youtube_trending_data.csv"
     FILE_NAME_JSON = "MX_category_id.json"
 
-    api = KaggleApi()
+    api = kaggle.KaggleApi()
     api.authenticate()
 
     api.dataset_download_file(DATASET_NAME, FILE_NAME_CSV)
     api.dataset_download_file(DATASET_NAME, FILE_NAME_JSON)
 
-    with ZipFile(FILE_NAME_ZIP, "r") as zip_obj:
+    with zipfile.ZipFile(FILE_NAME_ZIP, "r") as zip_obj:
         zip_obj.extractall()
 
     os.remove(FILE_NAME_ZIP)
