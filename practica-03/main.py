@@ -33,8 +33,7 @@ def main() -> None:
     dt_year = df["publishedAt"].dt.year
 
     # Videos con más vistas en los últimos tres años por categoría
-    most_viewed_videos = df[dt_year == 2020].groupby("category")[
-        "view_count"].idxmax()
+    most_viewed_videos = df[dt_year == 2020].groupby("category")["view_count"].idxmax()
     most_viewed_videos = df.loc[most_viewed_videos]
     most_viewed_videos.to_csv("./data/Most_viewed_videos.csv")
     print(most_viewed_videos)
