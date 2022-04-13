@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import statsmodels.api as sm
 import json
 import numbers
-from typing import Dict
 
 
-# def read_categories(file_name: str) -> dict[int, str]:   # Python 3.9+
-def read_categories(file_name: str) -> Dict[int, str]:
+# from typing import Dict
+# def read_categories(file_name: str) -> Dict[int, str]:
+def read_categories(file_name: str) -> dict[int, str]:  # Python 3.9+
     with open(file_name, "r") as file:
         json_data = json.load(file)
         return {
