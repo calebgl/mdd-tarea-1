@@ -3,7 +3,9 @@ import pandas as pd
 import json
 
 
-def read_categories(file_name: str) -> dict[int, str]:
+# from typing import Dict
+# def read_categories(file_name: str) -> Dict[int, str]:
+def read_categories(file_name: str) -> dict[int, str]:  # Python 3.9+
     with open(file_name, "r") as file:
         json_data = json.load(file)
         return {
@@ -80,6 +82,21 @@ def main() -> None:
         ax.legend(loc=3, labels=labels)
         plt.savefig(f"{IMG_FOLDER}/percentage_category_{year}.png")
         plt.close()
+
+    grp_category_and_year = df.groupby(["category", dt_year])
+    total_likes_views = grp_category_and_year[["view_count", "likes"]].sum()
+
+    total_likes_views.reset_index(inplace=True)
+    total_likes_views.drop("publishedAt", inplace=True, axis=1)
+    total_likes_views.boxplot("likes", by="category", figsize=(18, 9))
+    plt.xticks(rotation=90)
+    plt.savefig("assets/boxplot_likes.png")
+    plt.close()
+
+    total_likes_views.boxplot("view_count", by="category", figsize=(18, 9))
+    plt.xticks(rotation=90)
+    plt.savefig("assets/boxplot_views.png")
+    plt.close()
 
 
 if __name__ == "__main__":
