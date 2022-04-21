@@ -1,8 +1,9 @@
+from typing import Dict
 import pandas as pd
 import json
 
 
-def read_categories(file_name: str) -> dict[int, str]:
+def read_categories(file_name: str) -> Dict[int, str]:
     with open(file_name, "r") as file:
         json_data = json.load(file)
         return {
@@ -28,7 +29,7 @@ def main() -> None:
         converters={"categoryId": insert_category},
     )
 
-    data_frame.rename(columns={"categoryId": "category"}, axis=1, inplace=True)
+    data_frame.rename(columns={"categoryId": "category"}, inplace=True)
 
     print(data_frame)
 
